@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+
+window.addEventListener('DOMContentLoaded',()=>{
+	let arr=[1,2,3,4,5];
+	let add=document.querySelector("#but");
+	add.addEventListener('click',()=>{
+	let val=document.querySelector("#id1").value;
+	let a=false;
+		for(let i=0;i<arr.length;i++){
+			if(arr[i]==val){
+				document.querySelector("#p1").innerHTML="item already present";
+				a=true;
+				break;
+			}
+			
+		}
+		
+		if(a==false){
+			function add1(){
+				arr.push(val);
+				console.log(arr);
+			}
+			add1();
+		}
+	});
+	
+
+});
+</script>
+</head>
+<body>
+<h1>ADD Item.</h1>
+<br>
+<input id="id1" type="text" placeholder="add_iteam">
+<br>
+<br>
+<button id="but">ADD</button>
+<br>
+<hr>
+<p id="p1">.</p>
+</body>
+</html>
