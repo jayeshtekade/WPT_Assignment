@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script>
+
+    window.addEventListener('DOMContentLoaded', () => {
+        console.log("check this always");
+       
+
+        let arr = [{ empno: 100, name: "jt", email: "jt@gmail.com", deptid: 10 },
+        { empno: 101, name: "pt", email: "pt@gmail.com", deptid: 20 },
+        { empno: 102, name: "kb", email: "kb@gmail.com", deptid: 30 },
+        { empno: 103, name: "gw", email: "gw@gmail.com", deptid: 40 }
+        ];
+        console.log(arr);
+
+        const num = document.querySelector('#id1');
+
+        num.addEventListener('blur', () => {
+
+            let ref = document.querySelector("#id1").value;
+            let res = find(ref);
+
+            if (res) {
+                document.querySelector('#msg').innerText = "Employee Found";
+                // document.querySelector('#name').value = ref.name;
+                // document.querySelector('#email').value = ref.email;
+                // document.querySelector('#deptid').value = ref.deptid;
+                document.querySelector("#modify").disabled = false;
+                document.querySelector("#remove").disabled = false;
+
+            }
+            else {
+                document.querySelector("#add").disabled = false;
+                document.querySelector('#msg').innerText = "Employee Details not found";
+            }
+
+        });
+
+        // Add 
+        const add1 = document.querySelector("#add");
+        add1.addEventListener('click', () => {
+
+
+            let empno = document.querySelector("#id1").value;
+            let ename = document.querySelector("#name").value;
+            let mail = document.querySelector("#email").value;
+            let deptno = document.querySelector("#deptid").value;
+
+            arr.push({ empno: empno, name: ename, email: mail, deptid: deptno });
+            document.querySelector('#msg').innerText = "Employee added";
+            console.log(arr);
+
+
+        });
+
+        const modify = document.querySelector('#modify');
+            modify.addEventListener('click', () => {
+                let output = updateemp(+document.querySelector('#id1').value);
+                document.querySelector('#msg').innerText = "Employee updated to the List";
+                // document.querySelector('#emparr').innerText = displayEmp();
+                console.log(arr);
+            });
+
+        //     let e_modify=document.querySelector("#modify");
+		// e_modify.addEventListener('click',()=>{
+		// let num=document.querySelector("#id1").value;
+		// 	let eno=document.querySelector("#id1").value;
+		// 	let eid=document.querySelector("#id2").value;
+		// 	let sal=document.querySelector("#id3").value;
+		// 	//let obj={eid,sal};
+		// 	for(let i=0;i<arr.length;i++){
+		// 		if(arr[i].eno==num){
+		// 			arr[i].eid=eid;
+		// 			arr[i].sal=sal;
+		// 		}
+		// 	}
+		// 	//arr[count++]=obj;
+		// 	console.log(arr);
+		// });
+
+
+        // ViewAll
+        const view1 = document.querySelector("#view");
+        view1.addEventListener('click',()=>{
+
+            document.querySelector('#emparr').innerText = display();
+
+        });
+
+        function find(num) {
+
+            let output = false;
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i].empno == num) {
+                    output = true;
+                    return output;
+                }
+            }
+            return output;
+        }
+
+        //remove
+
+        const del=document.querySelector("#remove");
+        del.addEventListener('click',()=>{
+    
+            let empno=document.querySelector("#id1").value;
+
+            for(let i=0;i<arr.length;i++){
+
+                if(arr[i].empno ==empno){
+
+                    arr.splice(i,1);
+                    break;
+                }
+            }
+            document.querySelector('#msg').innerText = "Employee removed ";
+            console.log(arr);
+            document.querySelector('#emparr').innerText = display();
+
+
+
+
+        });
+
+        // view by dept id
+
+        const byid=document.querySelector("#viewid");
+        byid.addEventListener('click',()=>{
+
+            let input=prompt("enter ID");
+            let content="";
+            for(let i=0;i<arr.length;i++){
+
+                if(arr[i].empno==input){
+                    content += "[Emp No : "+arr[i].empno +",  ";
+                    content += "Emp Name : "+arr[i].name +",  ";
+                    content += "Emp Email : "+arr[i].email +",  ";
+                    content += "Emp Dept ID : "+arr[i].deptid +"]"
+
+                }
+
+            }
+            document.querySelector('#emparr').innerText = content;
+
+
+
+        });
+
+        function updateemp(enumb){
+                let name = window.prompt();
+                let mail = window.prompt();
+                let dept = window.prompt();
+                let emptemp = {empno:enumb, name:name, email:mail, deptid:dept};
+                for(let i=0; i<arr.length; i++){
+                    if(arr[i].empno == enumb){
+                        arr.splice(i, 1, emptemp);
+                    }
+                }
+            }
+
+            function display(){
+                let content = "";
+                for(let i=0; i<arr.length; i++){
+                    content += "[Emp No : "+arr[i].empno +",  ";
+                    content += "Emp Name : "+arr[i].name +",  ";
+                    content += "Emp Email : "+arr[i].email +",  ";
+                    content += "Emp Dept ID : "+arr[i].deptid +"]\n";
+                }
+                return content; 
+            }
+
+    });
+
+
+
+</script>
+
+<body>
+    <input type="text" id="id1" placeholder="Emp No">
+    <span id="msg">X</span><br /><br />
+    <input type="text" id="name" placeholder="Emp Name"><br /><br />
+    <input type="text" id="email" placeholder="Emp Email"><br /><br />
+    <input type="text" id="deptid" placeholder="Emp Dept ID"><br /><br />
+    <button id="add" disabled>Add</button>
+    <button id="modify" disabled>Modify</button>
+    <button id="remove" disabled>Remove</button>
+    <button id="view">View all</button>
+    <button id="viewid">View by Dept ID</button>
+    <br /><br />
+    <span id="emparr">Y</span>
+</body>
+
+</html>
