@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+
+window.addEventListener('DOMContentLoaded',()=>{
+        console.log("check this always");
+
+        let x=[1,2,3,4,5,6,7,8,9,10];
+        console.log(x);
+        let input=document.querySelector("#id1");
+        input.addEventListener('blur',()=>{
+
+            let ref=document.querySelector("#id1").value;
+            let res=find(ref);
+
+            if(res){
+
+                document.querySelector("#msg").innerHTML="Element is Present";
+                document.querySelector("#edit").disabled=false;
+                document.querySelector("#deletee").disabled=false;
+
+            }
+            else{
+                document.querySelector("#msg").innerHTML="Element Not is Present";
+                document.querySelector("#add").disabled=false;
+                document.querySelector("#viewall").disabled=false;
+                document.querySelector("#sop").disabled=false;
+
+            }
+
+        }
+          
+        );
+        // End Of find and blur event
+
+        let add1=document.querySelector("#add");
+        add1.addEventListener('click',()=>{
+
+            console.log("Add Button is Clicked");
+            let ref=document.querySelector("#id1").value;
+            let res=find(ref);
+
+            if(!res){
+                x.push(ref);
+                console.log(x);
+            }
+            document.querySelector("#viewall").disabled=false;
+            document.querySelector("#sop").disabled=false;
+        }
+        );
+        // End of Add Event
+
+        let edit1=document.querySelector("#edit");
+        edit1.addEventListener('click',()=>{
+
+            console.log("Edit Button is Clicked");
+            let oldvalue=document.querySelector("#id1").value;
+            let newvalue=window.prompt("Enter Number");
+            let output=edit(oldvalue,newvalue);
+
+            if(output){
+                document.querySelector("#msg").innerHTML="Element updated";
+                console.log(x);
+            }
+
+            document.querySelector("#viewall").disabled=false;
+            document.querySelector("#sop").disabled=false;
+
+        });
+
+        //edit end
+
+        let delete1=document.querySelector("#deletee");
+        delete1.addEventListener('click',()=>{
+
+            console.log("Delete Button is Clicked");
+            let d=document.querySelector("#id1").value;
+
+            for(let i=0;i<x.length;i++){
+
+                if(x[i]==d){
+                    x.splice(i,1);
+                    console.log(x);
+                    break;
+
+                }
+            }
+
+            document.querySelector("#viewall").disabled=false;
+            document.querySelector("#sop").disabled=false;
+        });
+
+        //delete event end
+
+        let view1=document.querySelector("#viewall");
+        view1.addEventListener('click',()=>{
+
+            document.querySelector("#t1").innerHTML=(x);
+           
+        });
+
+
+
+        let sop1=document.querySelector("#sop");
+        sop1.addEventListener('click',()=>{
+
+            console.log("Sop Button is Clicked");
+
+            let pos=odd();
+
+            document.querySelector("#t1").innerHTML=pos;
+
+
+
+        });
+
+
+           
+        
+        
+            function find(num){
+                for(let i=0;i < x.length ;i++){
+
+                    if(x[i]==num){
+
+                        return true;
+                    }
+                }return false;
+            }
+
+
+            function edit(oldvalue,newvalue){
+                let updated=false
+                for(let i=0;i < x.length ;i++){
+                    if(x[i]==oldvalue){
+                        x[i]=newvalue;
+                        updated=true;
+                        break;
+                    }
+                    
+                }
+                return updated;
+
+            }
+
+            function odd(){
+
+                let podd="";
+                for(let i=0;i<x.length;i++){
+                    if(i%2 !=0){
+                        podd += " " +x[i];
+                    }
+                }
+                return podd;
+            }
+
+            
+    
+});
+
+
+
+
+
+
+</script>
+<body>
+    <h1>Welcome Jayesh</h1>
+    <hr>
+    <input type="text" id="id1" placeholder="perform here"> 
+    <span id="msg">X</span><br>
+
+
+    <button id="add" disabled>add</button>
+    <button id="edit" disabled>edit</button>
+    <button id="deletee" disabled>delete</button>
+    <button id="viewall" disabled>view all</button>
+    <button id="sop" disabled>view odd position</button>
+    <p id="t1"></p>
+
+
+
+</body>
+</html>
